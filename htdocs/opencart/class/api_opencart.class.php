@@ -19,19 +19,17 @@ use Luracast\Restler\RestException;
 
 
 /**
- * API class for web500k object
+ * API class for opencart object
  *
- * @smart-auto-routing false
+ * @smart-auto-routing true
  * @access protected 
  * @class  DolibarrApiAccess {@requires user,external}
  * 
  */
-class OpencartApi extends DolibarrApi
+class Opencart extends DolibarrApi
 {
     /**
      * Constructor
-     *
-     * @url GET web500k/
      * 
      */
     function __construct() {
@@ -42,9 +40,8 @@ class OpencartApi extends DolibarrApi
     /**
      * API Opencart
      *
-     * @param   int     $id ID
      * @return  array|mixed data without useless information
-     * @url GET opencart/info
+     * @url GET /info
      * @throws  RestException
      *
      */
@@ -63,10 +60,11 @@ class OpencartApi extends DolibarrApi
      * @param array $request_data New user data
      * @return int
      *
-     * @url POST opencart/project
+     * @url POST /projects
      */
     function createProject($requestData = NULL) {
-        $user = $this->getUser();
+        dol_syslog('Start create projet in Dol: '.json_encode($requestData), 7, 0, '_ca');
+        
         require_once DOL_DOCUMENT_ROOT.'/opencart/class/opencart_project.class.php';
         $ocProject = new OpencartProject();
         /*$params = array(
@@ -83,6 +81,7 @@ class OpencartApi extends DolibarrApi
             'opp_status' => 1,
             'opp_percent' => 50,
         );*/
+        $user = DolibarrApiAccess::$user;
         $params = array(
             'user' => $user,
             'title' => $requestData['title'],
@@ -98,13 +97,14 @@ class OpencartApi extends DolibarrApi
             'opp_percent' => $requestData['opp_percent'],
         );
         $rs = $ocProject->create($params);
+        dol_syslog('Result of create projet in Dol: '.json_encode($rs), 7, 0, '_ca');
         return [$rs];
     }
 
-    public function getUser() {
+    /*public function getUser() {
         $user = new User($this->db);
         $user->fetch(2);
         return $user;
-    }
+    }*/
 
 }

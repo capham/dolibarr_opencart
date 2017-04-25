@@ -50,6 +50,7 @@ class OcNotify
      */
     function send($notifcode, $object)
     {
+        // return 0; // For test
         global $user,$conf,$langs,$mysoc,$dolibarr_main_url_root;
         dol_syslog('Trigger, notifcode: '.$notifcode, 7, 0, '_ca');
         $notifCodes = [
@@ -59,7 +60,7 @@ class OcNotify
             'ORDER_SUPPLIER_APPROVE',
             'PROJECT_CREATE'
         ];
-        $userGroups = ['hr'=>6, 'dev'=>1];
+        $userGroups = ['hr'=>1, 'dev'=>2];
         if (!in_array($notifcode, $notifCodes)) {
             return 0;
         }
@@ -100,6 +101,20 @@ class OcNotify
                 break;
             case 'PROJECT_CREATE':
                 $emailTemplate = $this->getTemplateEmail('oc_new_project_send');
+                $emails = $this->getEmailInfo($userGroups['dev']);
+                foreach ($emails as $email) {
+                    $info = [
+                        'sendto' => $email,
+                        'replyto' => $email
+                    ];
+                    $mail = $this->makeEmail($emailTemplate, $info);
+                    $rs = $this->sendEmail($mail);
+                    if(!$rs) {
+                        dol_syslog('Cannot send email to: '.$email, 7, 0, '_ca');
+                    } else {
+                        dol_syslog('Successful send email to: '.$email, 7, 0, '_ca');
+                    }
+                }
                 break;
             default:
                 break;

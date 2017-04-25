@@ -18,11 +18,11 @@
  */
 
 /**
- * 	\defgroup   web500k     Module web500k
+ * 	\defgroup   opencart     Module opencart
  *  \brief      Example of a module descriptor.
- *				Such a file must be copied into htdocs/web500k/core/modules directory.
- *  \file       htdocs/web500k/core/modules/modMyModule.class.php
- *  \ingroup    web500k
+ *				Such a file must be copied into htdocs/opencart/core/modules directory.
+ *  \file       htdocs/opencart/core/modules/modMyModule.class.php
+ *  \ingroup    opencart
  *  \brief      Description and activation file for module MyModule
  */
 include_once DOL_DOCUMENT_ROOT .'/core/modules/DolibarrModules.class.php';
@@ -68,7 +68,7 @@ class modOpencart extends DolibarrModules
 		$this->description = "Integrate with opencart";
 		$this->descriptionlong = "This is module integrate with Opencart. Allow synchozine Customer, Order, Invoice, ...";
 		$this->editor_name = 'Ca Pham';
-		$this->editor_url = 'http://www.capham.com';
+		$this->editor_url = 'http://carlpham.com';
 		
 		// Possible values for version are: 'development', 'experimental', 'dolibarr', 'dolibarr_deprecated' or a version string like 'x.y.z'
 		$this->version = '1.0';
@@ -109,7 +109,7 @@ class modOpencart extends DolibarrModules
 		$this->dirs = array();
 
 		// Config pages. Put here list of php page, stored into mymodule/admin directory, to use to setup module.
-		$this->config_page_url = array("mysetuppage.php@mymodule");
+		$this->config_page_url = array("setup.php@opencart");
 
 		// Dependencies
 		$this->hidden = false;			// A condition to hide module
@@ -118,7 +118,7 @@ class modOpencart extends DolibarrModules
 		$this->conflictwith = array();	// List of modules id this module is in conflict with
 		$this->phpmin = array(5,0);					// Minimum version of PHP required by module
 		$this->need_dolibarr_version = array(3,0);	// Minimum version of Dolibarr required by module
-		$this->langfiles = array("mylangfile@mymodule");
+		$this->langfiles = array("opencart@opencart");
 
 		// Constants
 		// List of particular constants to add when module is enabled (key, 'chaine', value, desc, visible, 'current' or 'allentities', deleteonunactive)
